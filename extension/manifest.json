@@ -1,0 +1,17 @@
+{
+    "name": "Advent of Code - Helper",
+    "description": "",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "content_scripts": [
+        {
+            "js": [
+                "scripts/clipboard.js"
+            ],
+            "matches": [
+                "https://adventofcode.com/*"
+            ],
+            "run_at": "document_end"
+        }
+    ]
+}

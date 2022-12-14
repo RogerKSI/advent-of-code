@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "random": "cpp",
+        "iostream": "cpp"
+    },
+    "code-runner.saveFileBeforeRun": true,
+    "code-runner.saveAllFilesBeforeRun": true,
+    "code-runner.executorMap": {
+        "cpp": "cd $dir && (echo $(wc -l < $fileNameWithoutExt.in) && cat $fileNameWithoutExt.in) > $fileNameWithoutExt.cin && (echo $(wc -l < $fileNameWithoutExt.in.test) && cat $fileNameWithoutExt.in.test) > $fileNameWithoutExt.cin.test && g++-12 $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt $fileNameWithoutExt.cin && $dir$fileNameWithoutExt $fileNameWithoutExt.cin.test > $fileNameWithoutExt.out.test",
+        "python": "cd $dir && python3 $fileName $fileNameWithoutExt.in && python3 $fileName $fileNameWithoutExt.in.test > $fileNameWithoutExt.out.test",
+        "javascript": "cd $dir && node $fileName $fileNameWithoutExt.in && node $fileName $fileNameWithoutExt.in.test > $fileNameWithoutExt.out.test"
+    },
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.ignoreSelection": true,
+    "code-runner.executorMapByFileExtension": {
+        ".in": "cd $dir && wget -q --no-cookies --header \"Cookie: $(cat ./../cookies.txt)\" https://adventofcode.com/$(basename $dirWithoutTrailingSlash)/day/$fileNameWithoutExt/input -O $fileNameWithoutExt.in.test"
+    }
+}
