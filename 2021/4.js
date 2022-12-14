@@ -4,9 +4,6 @@ const { zip, countNoDup, occurs, array } = require('../util.js')
 const { count, sum, avg, median, min, max, gcd, lcm, PriorityQueue, Stack } = require('/usr/local/lib/node_modules/mathball')
 
 let lines = readFileSync(argv[2]).toString().split(/\r?\n/).slice(0, -1);
-let ansi = 0;
-let anss = "";
-
 let n = Math.floor((lines.length - 1) / 6)
 let numbers = lines[0].split(",").flat().map(x => parseInt(x));
 let marks = Array(n).fill().map((_) => Array(25).fill(0))

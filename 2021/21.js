@@ -3,15 +3,8 @@ const { argv } = require('process');
 const { range, zip, countNoDup, occurs, array, print, dict, norm } = require('../util.js')
 const { count, sum, avg, median, min, max, gcd, lcm, PriorityQueue, Stack } = require('/usr/local/lib/node_modules/mathball')
 
-let direct4 = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-let direct8 = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]
-const set = new Set();
 let lines = readFileSync(argv[2]).toString().split(/\r?\n/).slice(0, -1);
-let n = lines.length
 let marks = array([10], 0)
-let lists = array([n, 0], 0)
-let tables = array([n, 1, 0], 0)
-let ansi = 0;
 let anss = "";
 let arr = array([32, 32, 10, 10, 2], 0)
 
