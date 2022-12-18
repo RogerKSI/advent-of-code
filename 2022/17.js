@@ -5,12 +5,9 @@ const { count, sum, avg, median, min, max, gcd, lcm, Stack } = require('/usr/loc
 const PriorityQueue = require('/usr/local/lib/node_modules/js-priority-queue')
 
 const set = new Set();
-const pq = new PriorityQueue({ initialValues: [], comparator: ascIntCmp });
 let lines = readFileSync(argv[2]).toString().split(/\r?\n/).slice(0, -1);
 let height = array([7], -1);
-let table = array([500000, 7], 0);
 let mem = {};
-
 
 let blocks = [
     [
@@ -44,13 +41,13 @@ const checkCanMove = (rx, ry, lIdx) => {
 
     if (rx - blocks[lIdx].length + 1 < 0)
         return false;
-    if (ry + blocks[lIdx][0].length - 1 > 6)
+    if (ry < 0 || ry + blocks[lIdx][0].length - 1 > 6)
         return false;
 
     let canMove = true;
     for (let k = 0; k < blocks[lIdx].length; k++) {
         for (let l = 0; l < blocks[lIdx][k].length; l++) {
-            if (table[rx - k][ry + l] != 0 && blocks[lIdx][k][l] == '#') {
+            if (set.has(`${rx - k},${ry + l}`) && blocks[lIdx][k][l] == '#') {
                 canMove = false;
             }
         }
@@ -73,7 +70,7 @@ for (let i = 0; i < target; i++) {
     // check mem if we reach this state before
     // Note: I can't proof if this state is enough but it's correct for my input.
     let key = `${lIdx},${inpIdx},${height.map((h) => start - h).join(",")}`
-    if (loopHeight == 0 && key in mem) {
+    if (key in mem) {
         let diffN = i - mem[key][0];
         let diffH = maxHeight - mem[key][1];
         loopHeight += diffH * Math.floor((target - i) / diffN)
@@ -82,7 +79,7 @@ for (let i = 0; i < target; i++) {
         mem[key] = [i, maxHeight]
     }
 
-    for (let x = start; x >= 0;) {
+    for (let x = start; x >= 0; x--) {
 
         // move left / right
         let ny = line[inpIdx] == '>' ? y + 1 : y - 1;
@@ -95,7 +92,7 @@ for (let i = 0; i < target; i++) {
                 for (let l = 0; l < blocks[lIdx][k].length; l++) {
                     if (blocks[lIdx][k][l] == '#') {
                         height[y + l] = Math.max(height[y + l], x - k);
-                        table[x - k][y + l] = 1
+                        set.add(`${x - k},${y + l}`)
                     }
                 }
             }
@@ -103,9 +100,6 @@ for (let i = 0; i < target; i++) {
             maxHeight = Math.max(maxHeight, x);
             break
         }
-
-        x--;
-
     }
 }
 

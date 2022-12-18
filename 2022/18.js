@@ -4,8 +4,6 @@ const { range, zip, countNoDup, occurs, array, print, dict, norm, direct4, direc
 const { count, sum, avg, median, min, max, gcd, lcm, Stack } = require('/usr/local/lib/node_modules/mathball')
 const PriorityQueue = require('/usr/local/lib/node_modules/js-priority-queue')
 
-const set = new Set();
-const pq = new PriorityQueue({ initialValues: [], comparator: ascIntCmp });
 let lines = readFileSync(argv[2]).toString().split(/\r?\n/).slice(0, -1);
 let n = lines.length;
 
@@ -38,15 +36,7 @@ lines.forEach((line, idx) => {
 });
 
 
-for (let i = 0; i < z; i++) {
-    for (let j = 0; j < z; j++) {
-        for (let k = 0; k < z; k++) {
-            if ((i == 0 || j == 0 || k == 0 || i == z || j == z || k == z) && table[i][j][k] == 0) {
-                bfs(i, j, k);
-            }
-        }
-    }
-}
+bfs(0, 0, 0);
 
 for (let i = 0; i < n; i++) {
     for (let dir of direct) {

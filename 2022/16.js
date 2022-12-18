@@ -4,8 +4,6 @@ const { range, zip, countNoDup, occurs, array, print, dict, norm, direct4, direc
 const { count, sum, avg, median, min, max, gcd, lcm, Stack } = require('/usr/local/lib/node_modules/mathball')
 const PriorityQueue = require('/usr/local/lib/node_modules/js-priority-queue')
 
-const set = new Set();
-const pq = new PriorityQueue({ initialValues: [], comparator: ascIntCmp });
 let lines = readFileSync(argv[2]).toString().split(/\r?\n/).slice(0, -1);
 let list = {};
 let visit = {};
