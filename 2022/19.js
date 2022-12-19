@@ -19,15 +19,23 @@ const dfs = (time, ...state) => {
     if (state[0] > cap[0] || state[1] > cap[1] || state[2] > cap[2] || time > target)
         return;
 
+    // cap the resource as it's useless if we have it more than that.
     for (let i = 4; i < 7; i++) {
         state[i] = Math.min(state[i], cap[i - 4] * (target - time))
     }
 
+    // generate mem with key
     let key = [state[0], state[1], state[2], state[4], state[5], state[6], time].join(",");
     let value = state[7] + state[3] * (target - time)
     if (key in mem && mem[key] >= value) {
         return
     }
+
+    // return if the possible maximum result from current state is lower than current max
+    if (value + (target - time) * (target - time + 1) / 2 < maxx) {
+        return
+    }
+
     mem[key] = value;
     maxx = Math.max(value, maxx)
 
@@ -84,6 +92,7 @@ lines.forEach((line, idx) => {
 
         dfs(0, 1, 0, 0, 0, 0, 0, 0, 0)
         ansi *= maxx
+        // ansi += maxx * (idx + 1)
         // console.log(maxx)
         // console.log(ansi)    
     }
