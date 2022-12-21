@@ -14,7 +14,6 @@ lines.forEach((line, idx) => {
     arr.push([(lines[idx] * 811589153), idx]);
 });
 
-
 for (let round = 1; round <= 10; round++) {
     for (let i = 0; i < n; i++) {
 
