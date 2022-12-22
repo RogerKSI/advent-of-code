@@ -86,6 +86,10 @@ const isOrder = (...arr) => {
     return order
 }
 
+const hash = (...params) => {
+    return params.join(",")
+}
+
 module.exports = {
     countNoDup: countNoDup,
     occurs: occurs,
@@ -96,10 +100,11 @@ module.exports = {
     print: print,
     printTable: printTable,
     range: range,
-    direct4: [[1, 0], [-1, 0], [0, 1], [0, -1]],
+    direct4: [[0, 1], [1, 0], [0, -1], [-1, 0]],
     direct8: [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]],
     ascIntCmp: (a, b) => a - b,
     descIntCmp: (a, b) => b - a,
     ord: (c) => c.charCodeAt(0),
-    isOrder: isOrder
+    isOrder: isOrder,
+    hash: hash
 };
