@@ -5,3 +5,5 @@
 **/*.out.test
 **/*.cin
 **/*.cin.test
+
+__pycache__
