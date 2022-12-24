@@ -3,19 +3,13 @@ const { argv, stdout } = require('process');
 const { range, zip, countNoDup, occurs, array, print, dict, norm, direct4, direct8, ascIntCmp, descIntCmp, ord, printTable, isOrder, hash } = require('../util.js')
 const { count, sum, avg, median, min, max, gcd, lcm, Stack } = require('/usr/local/lib/node_modules/mathball')
 const PriorityQueue = require('/usr/local/lib/node_modules/js-priority-queue')
+const _ = require('/usr/local/lib/node_modules/lodash')
 
 let lines = readFileSync(argv[2]).toString().split(/\r?\n/).slice(0, -1);
 let n = lines.length;
 let m = lines[0]?.length;
 let monst = [];
 let seen = {};
-
-let map = {
-    ">": 0,
-    "v": 1,
-    "<": 2,
-    "^": 3,
-}
 
 const addMonst = (step) => {
     let nmons = {};
@@ -36,7 +30,7 @@ lines.forEach((line, idx) => {
     for (let i = 0; i < line.length; i++) {
         if (line[i] != "." && line[i] != "#") {
             mons[hash(idx, i)] = mons[hash(idx, i)] ?? [];
-            mons[hash(idx, i)].push(map[line[i]]);
+            mons[hash(idx, i)].push(">v<^".indexOf(line[i]));
         }
     }
 });
@@ -44,56 +38,49 @@ monst.push(mons);
 
 let idx = 0;
 let q = [];
-q.push({
-    "pos": [0, 1],
-    "step": 1
-})
+let start = [0, 1];
+let target = [n - 1, m - 2];
+q.push([start, 1, 0])
 
-let enfirst = true;
-let stfirst = true;
 while (idx < q.length) {
-    let top = q[idx++];
-    let [x, y] = top['pos'];
+    let [[x, y], step, stage] = q[idx++];
 
-    if (x == n - 1 && y == m - 2) {
-        if (enfirst) {
+    if (_.isEqual([x, y], target)) {
+        if (stage == 0) {
             q = [];
             idx = 0;
-            enfirst = false;
-        } else if (!stfirst) {
-            console.log(top['step'] - 1)
+            stage++;
+        } else if (stage == 2) {
+            console.log(step - 1)
             break;
         }
     }
 
-    if (x == 0 && y == 1) {
-        if (enfirst == false && stfirst) {
+    if (_.isEqual([x, y], start)) {
+        if (stage == 1) {
             q = [];
             idx = 0;
-            stfirst = false
+            stage++;
         }
     }
 
-    if (top['step'] >= monst.length) {
-        addMonst(top['step'])
+    if (step >= monst.length) {
+        addMonst(step)
     }
 
     for (let [dx, dy] of [...direct4, [0, 0]]) {
         let [nx, ny] = [x + dx, y + dy]
 
-        if (hash(nx, ny) in monst[top['step']])
+        if (hash(nx, ny) in monst[step])
             continue
 
         if (nx < 0 || nx > n - 1 || ny < 0 || ny > m - 1 || lines[nx][ny] == '#')
             continue;
 
-        if (hash(nx, ny, top['step'] + 1) in seen)
+        if (hash(nx, ny, step + 1, stage) in seen)
             continue;
-        seen[hash(nx, ny, top['step'] + 1)] = 1
+        seen[hash(nx, ny, step + 1, stage)] = 1
 
-        q.push({
-            "pos": [nx, ny],
-            "step": top['step'] + 1
-        })
+        q.push([[nx, ny], step + 1, stage])
     }
 }

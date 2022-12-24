@@ -6,4 +6,4 @@
 **/*.cin
 **/*.cin.test
 
-__pycache__
+__pycache__/
